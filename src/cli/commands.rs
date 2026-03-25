@@ -13,7 +13,11 @@ pub enum Commands {
         
         /// To show the `private_key` defined
         #[arg(short, long)]
-        show: bool
+        show: bool,
+
+        #[arg(short, long)]
+        change: Option<String>
+
     },
 
     /// Seal the `path` provided with `Emet::up().seal()` and save the file signed in a `.emet` file

@@ -1,3 +1,4 @@
+use colored::*;
 
 use emet::{Emet, core::EmetError};
 use crate::{cli::commands::Commands, core::Files};
@@ -8,8 +9,36 @@ pub fn matches(command: &Commands, emet: &mut Emet, files: &mut Files) -> Result
 
     match command {
 
-        Commands::Up { private_key, show } => {
+        Commands::Up { private_key, show, change } => {
         
+            if let Some(nk) = change {
+
+                if let Ok(key_created) = files.verify_if_has_private_key() {
+
+                    if key_created {
+
+                        emet.private_key = nk.clone();
+                        println!("{}", "Don't forget this new key".red());
+                        println!("{}", "Private Key Changed!".yellow());
+
+                        files.write(emet.private_key.clone(), &files.emet_path).map_err(|e| {
+                            EmetError::IoError(Error::new(ErrorKind::Other, e))
+                        })?;
+
+
+                    } else {
+
+                        println!("");
+                        println!("{}", "You don't have a private key already".dimmed());
+                        println!("To create use: \"emet up <YOUR_PRIVATE_KEY>\"");
+                        println!("");
+
+                    }
+
+                }
+
+            }
+
             if let Some(pk) = private_key {
 
                 if let Ok(key_created) = files.verify_if_has_private_key() {
@@ -17,8 +46,8 @@ pub fn matches(command: &Commands, emet: &mut Emet, files: &mut Files) -> Result
                     if !key_created {
 
                         emet.private_key = pk.clone();
-                        println!("ALERT -- You don't must forget it");
-                        println!("Private Key Updated!");
+                        println!("{}", "Don't forget that".red());
+                        println!("{}", "Private Key Created!".yellow());
 
                         files.write(emet.private_key.clone(), &files.emet_path).map_err(|e| {
                             EmetError::IoError(Error::new(ErrorKind::Other, e))
@@ -31,8 +60,10 @@ pub fn matches(command: &Commands, emet: &mut Emet, files: &mut Files) -> Result
                     } else {
                         
                         println!("");
-                        println!("Your private key can not be changed. Your digital signatures are make with this key.");
-                        println!("If you want change (not recommended) use: \"emet up --change\"");
+                        println!("{}", "Your digital signatures are maked with this current key.".dimmed());
+                        println!("If you want change (not recommended) use: {}", "emet up --change".yellow());
+                        println!("");
+                        println!("{}", "All your files signed will be lost".dimmed());
                         println!("");
                     
                     }
@@ -49,7 +80,8 @@ pub fn matches(command: &Commands, emet: &mut Emet, files: &mut Files) -> Result
                     if !content.is_empty() {
                         println!("{}", content);
                     } else {
-                        println!("You didn't provide a private key.");
+                        println!("{}", "You didn't create a private key already.".dimmed());
+                        println!("Use: {}", "emet up <YOUR_PRIVATE_KEY>".yellow());
                     }
 
                 }
@@ -96,6 +128,7 @@ pub fn matches(command: &Commands, emet: &mut Emet, files: &mut Files) -> Result
             Ok(())
 
         }
+
 
         Commands::Check { path, emet_path } => {
             
