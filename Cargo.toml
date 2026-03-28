@@ -1,6 +1,6 @@
 [package]
 name = "emet"
-version = "0.2.0"
+version = "0.2.1"
 edition = "2024"
 authors = ["Gabriel Xavier <dotxavket@gmail.com>"]
 description = "A lightweight file integrity and digital signature library powered by the Tequel hashing primitive. Fast, local-first, and designed for long-term data truth."

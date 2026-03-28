@@ -47,7 +47,7 @@ pub fn matches(command: &Commands, emet: &mut Emet, files: &mut Files) -> Result
 
                         emet.private_key = pk.clone();
                         println!("{}", "Don't forget that".red());
-                        println!("{}", "Private Key Created!".yellow());
+                        println!("-- {}", "Private Key Created!".yellow());
 
                         files.write(emet.private_key.clone(), &files.emet_path).map_err(|e| {
                             EmetError::IoError(Error::new(ErrorKind::Other, e))
@@ -60,16 +60,17 @@ pub fn matches(command: &Commands, emet: &mut Emet, files: &mut Files) -> Result
                     } else {
                         
                         println!("");
-                        println!("{}", "Your digital signatures are maked with this current key.".dimmed());
+                        println!("{}", "Your digital signatures are maked with this key.".dimmed());
                         println!("If you want change (not recommended) use: {}", "emet up --change".yellow());
                         println!("");
-                        println!("{}", "All your files signed will be lost".dimmed());
+                        println!("{}", "All your files signed will be lost".red());
                         println!("");
                     
                     }
 
                 }
                 
+            
             } else {
                 if *show {
                     
@@ -78,7 +79,7 @@ pub fn matches(command: &Commands, emet: &mut Emet, files: &mut Files) -> Result
                     })?;
 
                     if !content.is_empty() {
-                        println!("{}", content);
+                        println!("{}", content.yellow());
                     } else {
                         println!("{}", "You didn't create a private key already.".dimmed());
                         println!("Use: {}", "emet up <YOUR_PRIVATE_KEY>".yellow());
@@ -108,12 +109,13 @@ pub fn matches(command: &Commands, emet: &mut Emet, files: &mut Files) -> Result
 
                         emet.save_seal(pts_str, &sealed).map_err(|e| EmetError::IoError(Error::new(ErrorKind::Other, format!("UTF-8 Error -- {}", e))))?;
 
-                        println!("Your \"{}\" was signed with your digital signature", p.display());
+                        println!("{} was signed!", p.display().to_string().yellow());
+                        println!("-- {}{} created!", p.display().to_string().yellow(), ".emet".yellow());
 
                     } else {
                         
-                        println!("You didn't set your private key already.");
-                        println!("Use: \"emet up <YOUR_KEY>\"");
+                        println!("{}", "You didn't set your private key already.".yellow());
+                        println!("Use: {}", "emet up <YOUR_KEY>".yellow());
 
                     }
                 
@@ -121,7 +123,7 @@ pub fn matches(command: &Commands, emet: &mut Emet, files: &mut Files) -> Result
 
             } else {
 
-                println!("Path not provided")
+                println!("{}", "Path not provided".yellow())
 
             }
 
@@ -145,34 +147,34 @@ pub fn matches(command: &Commands, emet: &mut Emet, files: &mut Files) -> Result
 
                             match emet.check(path_str, emet_path_str) {
                                 Ok(_) => {
-                                    println!("Emet Status -- Digital Signature is Authentic!")
+                                    println!("{} {} is {}!", "[emet]".cyan(), path_str.yellow(), "authentic".yellow())
                                 }
                                 Err(e) => {
-                                    println!("Emet Status {} -- {}", emet_path_str, e);
+                                    println!("{} {} -- {}", "[emet]".cyan(), emet_path_str.yellow(), e);
                                 } 
                             }
                             
 
                         } else {
 
-                            println!("You didn't set your private key already.");
-                            println!("Use: \"emet up <YOUR_KEY>\"");
+                            println!("{}", "You didn't set your private key already.".yellow());
+                            println!("Use: {}", "emet up <YOUR_KEY>".yellow());
 
                         }
 
                     } else {
 
-                        println!("You didn't set your private key already.");
-                        println!("Use: \"emet up <YOUR_KEY>\"");
+                        println!("{}", "You didn't set your private key already.".yellow());
+                        println!("Use: {}", "emet up <YOUR_KEY>".yellow());
 
                     }
 
                 } else {
-                    println!(".emet path not provided")
+                    println!("{}", ".emet Path not provided".yellow())
                 }
 
             } else {
-                println!("Path not provided")
+                println!("{}", "Path not provided".yellow())
             }
 
             Ok(())
