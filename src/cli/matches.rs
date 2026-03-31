@@ -19,7 +19,7 @@ pub fn matches(command: &Commands, emet: &mut Emet, files: &mut Files) -> Result
 
                         emet.private_key = nk.clone();
                         println!("{}", "Don't forget this new key".red());
-                        println!("{}", "Private Key Changed!".yellow());
+                        println!("{}", "Private Key Changed!".yellow().bold());
 
                         files.write(emet.private_key.clone(), &files.emet_path).map_err(|e| {
                             EmetError::IoError(Error::new(ErrorKind::Other, e))
@@ -30,7 +30,7 @@ pub fn matches(command: &Commands, emet: &mut Emet, files: &mut Files) -> Result
 
                         println!("");
                         println!("{}", "You don't have a private key already".dimmed());
-                        println!("To create use: \"emet up <YOUR_PRIVATE_KEY>\"");
+                        println!("To create use: {}", "emet up <YOUR_PRIVATE_KEY>".yellow().bold());
                         println!("");
 
                     }
@@ -47,7 +47,7 @@ pub fn matches(command: &Commands, emet: &mut Emet, files: &mut Files) -> Result
 
                         emet.private_key = pk.clone();
                         println!("{}", "Don't forget that".red());
-                        println!("-- {}", "Private Key Created!".yellow());
+                        println!("-- {}", "Private Key Created!".yellow().bold());
 
                         files.write(emet.private_key.clone(), &files.emet_path).map_err(|e| {
                             EmetError::IoError(Error::new(ErrorKind::Other, e))
@@ -61,7 +61,7 @@ pub fn matches(command: &Commands, emet: &mut Emet, files: &mut Files) -> Result
                         
                         println!("");
                         println!("{}", "Your digital signatures are maked with this key.".dimmed());
-                        println!("If you want change (not recommended) use: {}", "emet up --change".yellow());
+                        println!("If you want change (not recommended) use: {}", "emet up --change".yellow().bold());
                         println!("");
                         println!("{}", "All your files signed will be lost".red());
                         println!("");
@@ -79,10 +79,10 @@ pub fn matches(command: &Commands, emet: &mut Emet, files: &mut Files) -> Result
                     })?;
 
                     if !content.is_empty() {
-                        println!("{}", content.yellow());
+                        println!("{}", content.yellow().bold());
                     } else {
                         println!("{}", "You didn't create a private key already.".dimmed());
-                        println!("Use: {}", "emet up <YOUR_PRIVATE_KEY>".yellow());
+                        println!("Use: {}", "emet up <YOUR_PRIVATE_KEY>".yellow().bold());
                     }
 
                 }
@@ -115,7 +115,7 @@ pub fn matches(command: &Commands, emet: &mut Emet, files: &mut Files) -> Result
                     } else {
                         
                         println!("{}", "You didn't set your private key already.".yellow());
-                        println!("Use: {}", "emet up <YOUR_KEY>".yellow());
+                        println!("Use: {}", "emet up <YOUR_KEY>".yellow().bold());
 
                     }
                 
@@ -147,10 +147,10 @@ pub fn matches(command: &Commands, emet: &mut Emet, files: &mut Files) -> Result
 
                             match emet.check(path_str, emet_path_str) {
                                 Ok(_) => {
-                                    println!("{} {} is {}!", "[emet]".cyan(), path_str.yellow(), "authentic".yellow())
+                                    println!("{} {} is {}!", "[emet]".dimmed(), path_str.yellow(), "authentic".yellow().bold())
                                 }
                                 Err(e) => {
-                                    println!("{} {} -- {}", "[emet]".cyan(), emet_path_str.yellow(), e);
+                                    println!("{} {} -- {}", "[emet]".dimmed(), emet_path_str.yellow(), e);
                                 } 
                             }
                             

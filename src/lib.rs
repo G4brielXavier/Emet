@@ -1,7 +1,7 @@
 pub mod core;
 
 
-use tequel_rs::hash::TequelHash;
+use tequel::hash::TequelHash;
 
 use serde::{ Deserialize, Serialize };
 use chrono::{Utc};
@@ -84,7 +84,7 @@ impl Emet {
         Ok(EmetSeal { 
             original_hash: file_hash, 
             timestamp: timestamp, 
-            tequel_version: "+0.7.0".to_string(), 
+            tequel_version: "v1.1.0".to_string(), 
             digital_signature: signature
         })
 
@@ -129,7 +129,7 @@ impl Emet {
         let orig_file_hash = self.tequel.tqlhash(&mmap_orig);
 
         if orig_file_hash != emet_seal_stamped.original_hash {
-            return Err(EmetError::TruthViolated)
+            return Err(EmetError::ForgedStamp);
         }
 
         // Signature Autenticity

@@ -140,8 +140,13 @@ impl Files {
 
 #[derive(Debug)]
 pub enum EmetError {
+    /// If data was violated.
     TruthViolated,
+
+    /// If the data was forged. 
     ForgedStamp,
+
+    /// Errors in I/O management
     IoError(std::io::Error)
 }
 

@@ -218,7 +218,7 @@ checksum = "48c757948c5ede0e46177b7add2e67155f70e33c07fea8284df6576da70b3719"
 
 [[package]]
 name = "emet"
-version = "0.2.1"
+version = "1.0.0"
 dependencies = [
  "chrono",
  "clap",
@@ -497,9 +497,9 @@ dependencies = [
 
 [[package]]
 name = "tequel-rs"
-version = "0.7.6"
+version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7b128717be772abfcd72bcfa9df0eb559357ffde24f72b70d6126bc0fdac56a5"
+checksum = "dc2623ed2ac8209119b2c4912deaae3531ade90fd0ee672939621e0ad4b42252"
 dependencies = [
  "getrandom",
  "hex",
