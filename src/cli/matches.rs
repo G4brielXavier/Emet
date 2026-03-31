@@ -110,7 +110,7 @@ pub fn matches(command: &Commands, emet: &mut Emet, files: &mut Files) -> Result
                         emet.save_seal(pts_str, &sealed).map_err(|e| EmetError::IoError(Error::new(ErrorKind::Other, format!("UTF-8 Error -- {}", e))))?;
 
                         println!("{} was signed!", p.display().to_string().yellow());
-                        println!("-- {}{} created!", p.display().to_string().yellow(), ".emet".yellow());
+                        println!(" -- {}{} created!", p.display().to_string().yellow(), ".emet".yellow());
 
                     } else {
                         
@@ -150,7 +150,7 @@ pub fn matches(command: &Commands, emet: &mut Emet, files: &mut Files) -> Result
                                     println!("{} {} is {}!", "[emet]".dimmed(), path_str.yellow(), "authentic".yellow().bold())
                                 }
                                 Err(e) => {
-                                    println!("{} {} -- {}", "[emet]".dimmed(), emet_path_str.yellow(), e);
+                                    println!("{} {} -- {}", "[emet alert]".dimmed(), emet_path_str.yellow(), e.to_string().red());
                                 } 
                             }
                             
