@@ -15,6 +15,7 @@ pub enum Commands {
         #[arg(short, long)]
         show: bool,
 
+        /// To change the `private_key`
         #[arg(short, long)]
         change: Option<String>
 

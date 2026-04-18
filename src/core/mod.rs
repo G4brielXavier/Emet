@@ -147,7 +147,9 @@ pub enum EmetError {
     ForgedStamp,
 
     /// Errors in I/O management
-    IoError(std::io::Error)
+    IoError(std::io::Error),
+
+    AlreadySigned,
 }
 
 
@@ -157,6 +159,7 @@ impl fmt::Display for EmetError {
             EmetError::ForgedStamp => write!(f, "Forged Stamp"),
             EmetError::TruthViolated => write!(f, "Truth violated"),
             EmetError::IoError(e) => write!(f, "Io Error: {}", e),
+            EmetError::AlreadySigned => write!(f, "Already signed as emet")
         }
     }
 }

@@ -4,13 +4,13 @@
 
 **Emet** (Hebrew for *Truth*) is a command-line tool built in **Rust** designed to guarantee the integrity and authorship of digital files. Whether sealing the source code of a critical system or the chapters of an epic 23-volume saga (for example), Emet creates a mathematical proof that a specific content existed at a specific time and was signed by you.
 
-At its core, Emet utilizes **Tequel v1.1.0**, a custom low-level hashing library, ensuring that even a single-bit alteration is detected.
+At its core, Emet utilizes **Tequel v1.2.0**, a custom low-level hashing library, ensuring that even a single-bit alteration is detected.
 
 
 
 ---
 
-## 🚀 Features (v1.0.0)
+## 🚀 Features (+ v1.0.0)
 
 * **Seal:** Generates a digital "fingerprint" of the file by combining the content, a UTC timestamp, and your private key.
 * **Audit:** Verifies if the current file matches the original seal through the `check` command.
@@ -37,11 +37,11 @@ Install CLI (bin):
 cargo install emet
 ```
 
-Instal with Dependencie (API):
+Instal as Dependencie:
 
 ```toml
 [dependencies]
-emet = "1.0.0"
+emet = "1.1.0"
 ```
 
 or 
@@ -78,10 +78,23 @@ emet seal ./myfile.txt
 emet check ./myfile.txt ./myfile.txt.emet
 ```
 
+Change your `private_key`:
+
+> If you change your `private_key`, you will lost your previous files signed.
+
+```ps
+emet up --change "new_private_key"
+```
+View it:
+
+```ps
+emet up --show
+```
+
 ## 🧬 Tecnnical Specifications
 
 - Language: Rust (2024 Edition)
-- Hashing Engine: [Tequel v1.1.0](https://crates.io/crates/tequel-rs) (7.999885 bits/byte entropy)
+- Hashing Engine: [Tequel v1.2.0](https://crates.io/crates/tequel-rs) (7.999985 bits/byte entropy)
 - Seal Format: JSON (via `Serde`)
 - Time Standard: UTC RCF3339 (via `Chrono`)
 

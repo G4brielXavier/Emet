@@ -1,9 +1,13 @@
 use colored::*;
 
-use emet::{Emet, core::EmetError};
+use std::io::{Error, ErrorKind};
+use std::path::PathBuf;
+
+use emet::Emet;
+use emet::core::EmetError;
+
 use crate::{cli::commands::Commands, core::Files};
 
-use std::{io::{Error, ErrorKind}, path::PathBuf};
 
 pub fn matches(command: &Commands, emet: &mut Emet, files: &mut Files) -> Result<(), EmetError> {
 
@@ -92,6 +96,7 @@ pub fn matches(command: &Commands, emet: &mut Emet, files: &mut Files) -> Result
 
         },
 
+
         Commands::Seal { path } => {
         
             if let Some(p) = path {
@@ -99,6 +104,12 @@ pub fn matches(command: &Commands, emet: &mut Emet, files: &mut Files) -> Result
                 if let Ok(key_created) = files.verify_if_has_private_key() {
 
                     if key_created {
+
+                        if p.extension().unwrap() == "emet" {
+                            println!("{} is already .emet file.", p.display().to_string().yellow());
+                            println!("{}", "-- You can't sign a .emet file again.".dimmed());
+                            return Err(EmetError::AlreadySigned)
+                        }
 
                         let path_str = p.to_str().ok_or_else(|| EmetError::IoError(Error::new(ErrorKind::Other, "UTF-8 Error")))?;
                         let sealed = emet.seal(path_str).map_err(|e| e)?;

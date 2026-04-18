@@ -84,7 +84,7 @@ impl Emet {
         Ok(EmetSeal { 
             original_hash: file_hash, 
             timestamp: timestamp, 
-            tequel_version: "v1.1.0".to_string(), 
+            tequel_version: "v1.2.0".to_string(), 
             digital_signature: signature
         })
 
@@ -152,6 +152,8 @@ impl Emet {
 
     /// Receive a path and `EmetSeal` to save the `EmetSeal` in file `.emet`
     pub fn save_seal(&self, path: &str, seal: &EmetSeal) -> Result<(), Box<dyn std::error::Error>> {
+
+
 
         let json = serde_json::to_string_pretty(seal).map_err(|e| {
             e
